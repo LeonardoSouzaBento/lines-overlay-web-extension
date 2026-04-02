@@ -35,12 +35,12 @@ const styles = {
 
   sizes: {
     default: {
-      minHeight: 40,
+      height: 40,
       paddingInline: 12,
       paddingBlock: (12 * 0.73438) / 0.93,
     },
     sm: {
-      minHeight: 36,
+      height: 36,
       paddingInline: 12,
       paddingBlock: 10,
     },

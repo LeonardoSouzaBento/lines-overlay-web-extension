@@ -1,7 +1,7 @@
-import { ChevronDown, ChevronUp, X } from "lucide-react";
-import type { MouseEvent } from "react";
 import type { StateSetter } from "@/types";
 import { Button, Icon, Separator } from "@/ui/index";
+import { ChevronDown, ChevronUp, EyeOff } from "lucide-react";
+import { DismountButton } from "./dismount-button";
 
 const css = {
   container: {
@@ -38,21 +38,28 @@ const css = {
   },
 } as const;
 
+interface Props {
+  open: boolean;
+  onToggleConfig: () => void;
+  setShowLines: StateSetter<boolean>;
+  onDismount: (e: React.MouseEvent) => void;
+}
+
 export function ConfigButton({
   onToggleConfig,
   open,
-  setShow,
-}: {
-  open: boolean;
-  onToggleConfig: () => void;
-  setShow: StateSetter<boolean>;
-}) {
-  const handleClick = (e: MouseEvent<HTMLButtonElement>, item: number) => {
+  setShowLines,
+  onDismount,
+}: Props) {
+  const handleClick = (
+    e: React.MouseEvent<HTMLButtonElement>,
+    item: number,
+  ) => {
     if (item === 1) {
       onToggleConfig();
     } else {
       e.stopPropagation();
-      setShow((v) => !v);
+      setShowLines((v) => !v);
     }
   };
 
@@ -80,6 +87,7 @@ export function ConfigButton({
               data-black
               key={item}
               onClick={(e) => {
+                e.stopPropagation();
                 handleClick(e, item);
               }}
             >
@@ -90,13 +98,14 @@ export function ConfigButton({
                   strokeWidth="light"
                 />
               ) : (
-                <Icon Icon={X} size="sm" strokeWidth="light" />
+                <Icon Icon={EyeOff} size="sm" strokeWidth="light" />
               )}
             </Button>
           ) : (
             <Separator orientation="vertical" />
-          )
+          ),
         )}
+        <DismountButton onDismount={onDismount} />
       </div>
     </div>
   );

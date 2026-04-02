@@ -35,13 +35,13 @@ export const NUMBER_FIELDS: NumberFieldConfig[] = [
   {
     key: 'gap',
     label: 'Gap',
-    quick: [16, 24, 32, 40, 44],
+    quick: [16, 24, 32, 40, 48],
     step: 4,
   },
   {
     key: 'opacity',
     label: 'Opacidade',
-    quick: [0.2, 0.3, 0.5, 0.7],
+    quick: [0.2, 0.4, 0.6, 0.8],
     step: 0.05,
   },
 ];

@@ -1,5 +1,6 @@
 import { Eye } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { DismountButton } from "./components/dismount-button";
 import {
   ConfigButton,
   ConfigOptions,
@@ -7,11 +8,6 @@ import {
 } from "./components/index";
 import type { StateSetter } from "./types";
 import { Button, Icon } from "./ui";
-
-type Props = {
-  setShow: StateSetter<boolean>;
-  show: boolean;
-};
 
 const css = {
   overlay: {
@@ -36,11 +32,17 @@ const css = {
   },
 } as const;
 
-function LinesOverlayCore({ show, setShow }: Props) {
+type Props = {
+  showLines: boolean;
+  setShowLines: StateSetter<boolean>;
+  onDismount: (e: React.MouseEvent) => void;
+};
+
+function LinesOverlayCore({ showLines, setShowLines, onDismount }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [lines, setLines] = useState(12);
+  const [lines, setLines] = useState(2);
   const [gap, setGap] = useState(24);
-  const [opacity, setOpacity] = useState(0.3);
+  const [opacity, setOpacity] = useState(0.4);
   const [color, setColor] = useState("#d71212");
   const [showConfig, setShowConfig] = useState(false);
   const [rotate, setRotate] = useState(0);
@@ -49,14 +51,14 @@ function LinesOverlayCore({ show, setShow }: Props) {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.key === ";") {
-        setShow((v) => !v);
+        setShowLines((v) => !v);
       }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, []);
 
-  if (!show) return null;
+  if (!showLines) return null;
 
   const height = lines * gap;
 
@@ -85,9 +87,10 @@ function LinesOverlayCore({ show, setShow }: Props) {
       </div>
       {/* Config */}
       <ConfigButton
-        setShow={setShow}
+        setShowLines={setShowLines}
         onToggleConfig={() => setShowConfig((v) => !v)}
         open={showConfig}
+        onDismount={onDismount}
       />
       {showConfig && (
         <ConfigOptions
@@ -108,7 +111,16 @@ function LinesOverlayCore({ show, setShow }: Props) {
 }
 
 export function LinesOverlay() {
-  const [show, setShow] = useState(false);
+  const [showComponent, setShowComponent] = useState(true);
+  const [showLines, setShowLines] = useState(true);
+
+  function onDismount(e: React.MouseEvent) {
+    e.stopPropagation();
+    setShowComponent(false);
+    window.dispatchEvent(new Event("lines-overlay-dismount"));
+  }
+
+  if (!showComponent) return null;
 
   return (
     <div
@@ -120,21 +132,27 @@ export function LinesOverlay() {
         width: "100%",
         height: "100dvh",
         fontFamily: "Inter, sans-serif",
+        color: "#000",
       }}
     >
-      <LinesOverlayCore setShow={setShow} show={show} />
+      <LinesOverlayCore
+        setShowLines={setShowLines}
+        showLines={showLines}
+        onDismount={onDismount}
+      />
 
       <Button
         size="sm"
         variant="ghost"
         style={{
           ...css.triggerButton,
-          visibility: show ? "hidden" : "visible",
+          visibility: showLines ? "hidden" : "visible",
         }}
-        onClick={() => setShow((v) => !v)}
+        onClick={() => setShowLines((v) => !v)}
       >
         <Icon Icon={Eye} size="xl" />
-        Mostrar linhas - <span style={{ color: "#787878ff" }}>Ctrl + ;</span>
+        Mostrar linhas <span style={{ color: "#787878ff" }}>( Ctrl + ; )</span>
+        <DismountButton onDismount={onDismount} />
       </Button>
     </div>
   );

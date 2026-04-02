@@ -3,8 +3,8 @@
 Extenção de nevegador usada para medir espaçamentos entre elementos de sites (veja as imagens abaixo)
 
 <div style="display: flex; max-width: max-content;">
-  <img src="./assets/exemplo1.png" width="300" style="margin-right: 12px;" />
-  <img src="./assets/exemplo.png" width="300" />
+  <img src="./src/assets/exemplo1.png" width="300" style="margin-right: 12px;" />
+  <img src="./src/assets/exemplo.png" width="300" />
 </div>
 
 ## 1 - Download e configuração

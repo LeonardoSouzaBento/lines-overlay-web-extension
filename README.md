@@ -24,6 +24,7 @@ Extensão de navegador usada para medir espaçamentos entre elementos de sites (
 5. Selecione a pasta do repositório, depois abra/escolha a pasta `dist`
 
 > Caso você faça alterações no código, clique no botão de recarregar a extensão, pois não é necessário apagar a extensão e instalar novamente.
+
 > Em caso de falhas, recarregue a página.
 
 ## 3 - Como usar a extensão
@@ -35,3 +36,14 @@ Extensão de navegador usada para medir espaçamentos entre elementos de sites (
 ### Por que essa extensão é útil?
 
 Essa extensão é especialmente útil para desenvolvedores medirem espaçamentos entre textos e outros elementos, visto que textos não têm base ou topo bem definidos, nem mesmo com line-height=1. Além disso, outro uso pode ser para a criação de outras extensões, reaproveitando o modelo do projeto.
+
+## Tecnologias Utilizadas
+
+Este projeto foi desenvolvido com as seguintes tecnologias:
+
+- **[React](https://react.dev/)**
+- **[TypeScript](https://www.typescriptlang.org/)**
+- **[Vite](https://vitejs.dev/)**
+- **[vite-plugin-web-extension](https://vite-plugin-web-extension.aklinker1.io/)**
+- **[Lucide React](https://lucide.dev/)**
+- **[ESLint](https://eslint.org/)**

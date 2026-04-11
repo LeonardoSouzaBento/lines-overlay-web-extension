@@ -94,20 +94,20 @@ export function UIRuler() {
   const [showLines, setShowLines] = useState(true);
 
   return (
-    <div className="fixed bottom-0 left-0 z-[9000] h-dvh w-full font-sans text-black">
+    <div className="fixed bottom-0 left-0 z-9000 h-dvh w-full font-sans text-black">
       <UIRulerCore setShowLines={setShowLines} showLines={showLines} />
 
       <Button
         variant="ghost"
-        className="absolute right-2 bottom-2 z-20 bg-white/90 shadow-sm pr-1.25 flex items-center gap-2"
+        className="absolute right-2 bottom-2 z-20 bg-white/94 backdrop-blur-sm shadow-sm rounded-full px-4 py-2 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-muted-foreground hover:text-foreground border-border/50"
         style={{
           visibility: showLines ? "hidden" : "visible",
         }}
         onClick={() => setShowLines((v) => !v)}
       >
-        <Icon Icon={Eye} size="3xl" strokeWidth="light" />
+        <Icon Icon={Eye} size="sm" strokeWidth="normal" />
         Ver Linhas
-        <span className="text-[#787878ff] text-sm">
+        <span className="text-muted-foreground/85 text-xs normal-case font-medium">
           Ctrl + <strong>;</strong>
         </span>
         <DismountButton />

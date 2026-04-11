@@ -44,13 +44,12 @@ export function MoveLinesButton({
   return (
     <div className="w-full h-full absolute left-0 top-0 flex items-center justify-center pointer-events-auto">
       <Button
-        size="icon"
-        data-black
+        size="iconMd"
         variant="ghost"
         onMouseDown={onMouseDown}
-        className="bg-white/75 backdrop-blur-[2px] rounded-full"
+        className="bg-white/75 backdrop-blur-[2px] rounded-full text-muted-foreground hover:text-foreground transition-colors shadow-sm border-border/50"
       >
-        <Icon Icon={Move} size="3xl" strokeWidth="2" />
+        <Icon Icon={Move} size="lg" strokeWidth="normal" />
       </Button>
     </div>
   );

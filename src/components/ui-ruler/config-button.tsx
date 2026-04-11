@@ -23,9 +23,9 @@ export function ConfigButton({ onToggleConfig, open, setShowLines }: Props) {
   };
 
   return (
-    <div className="fixed bottom-2 right-2 z-9999 pointer-events-auto h-10 border border-slate-400/50 bg-white text-black shadow-sm flex items-center pl-3.5 pr-1 rounded-sm">
+    <div className="fixed bottom-2 right-2 z-9999 pointer-events-auto h-10 border border-border/50 bg-white/94 backdrop-blur-sm text-foreground shadow-sm flex items-center pl-4 pr-1.5 rounded-full">
       <span
-        className="font-semibold tracking-wide pr-2 text-sm select-none"
+        className="font-semibold tracking-wide pr-2 text-sm uppercase select-none cursor-pointer text-muted-foreground hover:text-foreground transition-colors"
         onClick={(e) => {
           e.stopPropagation();
           onToggleConfig();
@@ -34,14 +34,13 @@ export function ConfigButton({ onToggleConfig, open, setShowLines }: Props) {
         Configurar
       </span>
 
-      <div className="h-full flex items-center pr-0.5 gap-1">
+      <div className="h-full flex items-center gap-1 text-[16px]">
         {[1, 2, 3].map((item) =>
           item !== 2 ? (
             <Button
-              className="outline-1 text-black"
-              variant={"transparent"}
-              size="icon-sm"
-              data-black
+              variant="ghost"
+              size="iconSm"
+              className="rounded-full"
               key={item}
               onClick={(e) => {
                 e.stopPropagation();
@@ -51,21 +50,19 @@ export function ConfigButton({ onToggleConfig, open, setShowLines }: Props) {
               {item === 1 ? (
                 <Icon
                   Icon={open ? ChevronDown : ChevronUp}
-                  size={"3xl"}
-                  strokeWidth="thin"
-                  color="#000"
+                  size="3xl"
+                  strokeWidth="light"
                 />
               ) : (
                 <Icon
                   Icon={EyeOff}
-                  size="xl"
-                  strokeWidth="thin"
-                  color="#000"
+                  size="lg"
+                  strokeWidth="light"
                 />
               )}
             </Button>
           ) : (
-            <Separator orientation="vertical" className="h-[66%]" key={item} />
+            <Separator orientation="vertical" className="h-4" key={item} />
           ),
         )}
         <DismountButton />

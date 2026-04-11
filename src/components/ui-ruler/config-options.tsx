@@ -1,6 +1,10 @@
 import { RotateCw } from "lucide-react";
-import { Button, Icon } from "@/components/ui";
-import { type ConfigOptionsProps, NUMBER_FIELDS, colorOptions } from "@/data/data";
+import { Button, Icon, Separator } from "@/components/ui";
+import {
+  type ConfigOptionsProps,
+  NUMBER_FIELDS,
+  colorOptions,
+} from "@/data/data";
 
 export function ConfigOptions(props: ConfigOptionsProps) {
   const fieldBindings = {
@@ -10,77 +14,89 @@ export function ConfigOptions(props: ConfigOptionsProps) {
   };
 
   return (
-    <div className="fixed bottom-13 right-2 z-1000 pointer-events-auto bg-white/94 backdrop-blur-sm shadow-md border border-slate-400/30 rounded-md px-3 py-2.5 w-auto flex flex-col items-end gap-1">
+    <div className="fixed bottom-13 right-2 z-1000 pointer-events-auto bg-white/94 backdrop-blur-sm shadow-md border border-border/50 rounded-2xl p-3 w-auto flex flex-col items-end gap-1.5 min-w-50">
       {NUMBER_FIELDS.map((field) => {
         const binding = fieldBindings[field.key];
 
         return (
-          <div className="w-full mb-3 flex flex-col gap-2" key={field.key}>
-            <div className="flex items-end gap-2 rounded-sm">
-              <div className="w-26">
-                <label className="block font-medium mb-1.25 text-sm">{field.label}</label>
+          <div className="w-full flex flex-col gap-2 p-1.5" key={field.key}>
+            <div className="flex flex-col gap-1">
+              <label className="text-xs font-semibold uppercase tracking-wider text-muted-foreground pl-0.5">
+                {field.label}
+              </label>
+              <div className="flex items-center gap-2">
                 <input
-                  className="w-full h-8 rounded-sm border border-gray-200 px-2 box-border text-sm text-black bg-white/50"
+                  className="w-16 h-8 rounded-full border border-border pl-3 text-sm text-foreground bg-background/50 focus:outline-none focus:ring-1 focus:ring-ring"
                   type="number"
                   step={field.step}
                   value={binding.value}
                   onChange={(e) => binding.set(+e.target.value)}
                 />
-              </div>
-              <div className="flex gap-1.5 mt-1">
-                {field.quick.map((v) => {
-                  return (
-                    <Button
-                      selected={binding.value === v}
-                      key={v}
-                      data-option
-                      variant="ghost"
-                      size="icon-sm"
-                      className="font-medium rounded-full bg-white/50"
-                      onClick={() => binding.set(v)}
-                    >
-                      {v}
-                    </Button>
-                  );
-                })}
+                <div className="flex gap-0 overflow-x-auto scrollbar-hidden">
+                  {field.quick.map((v) => {
+                    return (
+                      <div
+                        className="size-9 shrink-0 flex items-center justify-center 
+                        cursor-pointer"
+                        key={v}
+                        onClick={() => binding.set(v)}
+                      >
+                        <Button
+                          selected={binding.value === v}
+                          variant="ghost"
+                          size="iconSm"
+                          className="rounded-full text-sm"
+                        >
+                          {v}
+                        </Button>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </div>
         );
       })}
 
-      <div className="mb-3">
-        <span className="block font-medium mb-1 text-sm">Cor</span>
-        <div className="flex gap-2">
+      <Separator className="w-full my-1" />
+
+      <div className="w-full flex flex-col gap-2 p-1.5 pt-0">
+        <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground pl-0.5">
+          Cor
+        </span>
+        <div className="flex flex-wrap gap-2">
           {colorOptions.map((c) => (
             <Button
-              className="rounded-full"
+              className="rounded-full ring-offset-2 hover:ring-2 ring-ring transition-all"
               key={c.value}
               variant="ghost"
-              size="icon-sm"
+              size="iconXs"
               title={c.name}
               onClick={() => props.setColor(c.value)}
             >
-              <span className="block w-[80%] h-[80%] rounded-full" style={{ backgroundColor: c.value }} />
+              <span
+                className="block w-full h-full rounded-full border border-black/5"
+                style={{ backgroundColor: c.value }}
+              />
             </Button>
           ))}
         </div>
       </div>
 
-      <Button
-        variant="ghost"
-        size="sm"
-        className="w-full"
-        onClick={() => {
-          if (props.rotate === 0) {
-            props.setRotate(90);
-          } else {
-            props.setRotate(0);
-          }
-        }}
-      >
-        <Icon Icon={RotateCw} size="xl" strokeWidth="light" /> Rotacionar
-      </Button>
+      <Separator className="w-full my-1" />
+
+      <div className="w-full p-1">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="w-full rounded-full text-xs font-semibold uppercase tracking-wider"
+          onClick={() => props.setRotate(props.rotate === 0 ? 90 : 0)}
+        >
+          <Icon Icon={RotateCw} size="sm" strokeWidth="light" />
+          Rotacionar
+        </Button>
+      </div>
     </div>
   );
 }

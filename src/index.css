@@ -31,7 +31,7 @@ All colors MUST be HSL.
   --color-secondary-foreground: hsl(220 15% 20%);
 
   --color-muted: hsl(220 10% 94%);
-  --color-muted-foreground: hsl(220 10% 46%);
+  --color-muted-foreground: hsl(220 10% 38%);
 
   --color-accent: hsl(220 15% 92%);
   --color-accent-foreground: hsl(220 15% 20%);
@@ -44,7 +44,7 @@ All colors MUST be HSL.
 
   --color-grid-column: hsl(220 70% 55%);
 
-  --color-border: hsl(220 13% 87%);
+  --color-border: hsl(220 13% 82%);
   --color-input: hsl(220 13% 87%);
   --color-ring: hsl(220 70% 50%);
 
@@ -56,7 +56,7 @@ All colors MUST be HSL.
   --color-glass-bg: hsl(0 0% 100% / 0.92);
   --color-glass-border: hsl(220 13% 87% / 0.6);
   --color-glass-blur: 16px;
-  
+
   --color-sidebar-background: hsl(0 0% 98%);
   --color-sidebar-foreground: hsl(240 5.3% 26.1%);
   --color-sidebar-primary: hsl(240 5.9% 10%);
@@ -102,9 +102,48 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground text-[16px];
   }
 
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsla(var(--color-muted-foreground) / 0.3);
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsla(var(--color-muted-foreground) / 0.5);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsla(var(--color-muted-foreground) / 0.3) transparent;
+  }
+
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+
+  .scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@layer components {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    height: 28px;
+  }
   /* Custom Scrollbar */
   ::-webkit-scrollbar {
     width: 4px;

@@ -7,14 +7,15 @@ export default defineContentScript({
   cssInjectionMode: "ui",
 
   async main(ctx) {
+    console.log("UI Ruler: Content script loaded");
     const ui = await createShadowRootUi(ctx, {
-      name: "layout-column-ruler",
+      name: "ui-ruler",
       position: "overlay",
       anchor: "body",
       append: "last",
       onMount: (container) => {
         const wrapper = document.createElement("div");
-        wrapper.style.display = "none";
+        wrapper.style.display = "block";
         wrapper.style.colorScheme = "light"; // Force light mode
         wrapper.style.zIndex = "999999";
         wrapper.style.fontSize = "16px";

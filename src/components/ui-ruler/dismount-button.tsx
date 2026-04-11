@@ -10,13 +10,18 @@ export function DismountButton() {
   return (
     <Button
       asChild
-      size="icon-sm"
-      variant="transparent"
+      size="iconXs"
+      variant="destructive"
       onClick={handleDismount}
-      className="text-white bg-red-600 ml-1.5 rounded-sm"
+      className="rounded-full ml-1 hover:bg-destructive/80!"
     >
       <div>
-        <Icon Icon={X} size="3xl" color="red" strokeWidth="light" />
+        <Icon
+          Icon={X}
+          size="sm"
+          strokeWidth="thin"
+          className="text-destructive-foreground!"
+        />
       </div>
     </Button>
   );

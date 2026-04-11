@@ -1,6 +1,6 @@
 {
-  "name": "layout-column-ruler",
-  "description": "Grid de colunas para medir layouts de interfaces",
+  "name": "ui-ruler",
+  "description": "Régua de UI para medir espaçamentos e alinhamentos",
   "private": true,
   "version": "1.0.0",
   "type": "module",

@@ -16,6 +16,8 @@ type Props = {
 
 function UIRulerCore({ showLines, setShowLines }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const configButtonRef = useRef<HTMLDivElement>(null);
+  const configOptionsRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState(1);
   const [gap, setGap] = useState(24);
   const [opacity, setOpacity] = useState(0.4);
@@ -33,6 +35,24 @@ function UIRulerCore({ showLines, setShowLines }: Props) {
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, []);
+
+  // Fechar ao clicar fora
+  useEffect(() => {
+    if (!showConfig) return;
+
+    const handleClickOutside = (e: MouseEvent) => {
+      const path = e.composedPath();
+      const isInsideButton = configButtonRef.current && path.includes(configButtonRef.current);
+      const isInsideOptions = configOptionsRef.current && path.includes(configOptionsRef.current);
+
+      if (!isInsideButton && !isInsideOptions) {
+        setShowConfig(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showConfig]);
 
   const height = lines * gap - 0.625 * lines;
 
@@ -68,12 +88,14 @@ function UIRulerCore({ showLines, setShowLines }: Props) {
       </div>
       {/* Config */}
       <ConfigButton
+        ref={configButtonRef}
         setShowLines={setShowLines}
         onToggleConfig={() => setShowConfig((v) => !v)}
         open={showConfig}
       />
       {showConfig && (
         <ConfigOptions
+          ref={configOptionsRef}
           lines={lines}
           gap={gap}
           opacity={opacity}

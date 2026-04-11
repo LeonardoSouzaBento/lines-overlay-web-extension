@@ -15,7 +15,7 @@ export default defineContentScript({
       append: "last",
       onMount: (container) => {
         const wrapper = document.createElement("div");
-        wrapper.style.display = "block";
+        wrapper.style.display = "none";
         wrapper.style.colorScheme = "light"; // Force light mode
         wrapper.style.zIndex = "999999";
         wrapper.style.fontSize = "16px";
@@ -34,12 +34,18 @@ export default defineContentScript({
         };
         browser.runtime.onMessage.addListener(onMessage);
 
-        return { root, onMessage };
+        const onDismount = () => {
+          ui.remove();
+        };
+        window.addEventListener("ui-ruler-dismount", onDismount);
+
+        return { root, onMessage, onDismount };
       },
       onRemove: (state) => {
         if (state) {
           state.root.unmount();
           browser.runtime.onMessage.removeListener(state.onMessage);
+          window.removeEventListener("ui-ruler-dismount", state.onDismount);
         }
       },
     });

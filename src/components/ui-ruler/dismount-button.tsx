@@ -4,7 +4,7 @@ import { Button, Icon } from "@/components/ui";
 export function DismountButton() {
   function handleDismount(e: React.MouseEvent) {
     e.stopPropagation();
-    window.dispatchEvent(new Event("lines-overlay-dismount"));
+    window.dispatchEvent(new Event("ui-ruler-dismount"));
   }
 
   return (

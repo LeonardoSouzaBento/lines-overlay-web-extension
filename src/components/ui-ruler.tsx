@@ -18,10 +18,11 @@ function UIRulerCore({ showLines, setShowLines }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const configButtonRef = useRef<HTMLDivElement>(null);
   const configOptionsRef = useRef<HTMLDivElement>(null);
+  const moveLinesButtonRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState(1);
   const [gap, setGap] = useState(24);
   const [opacity, setOpacity] = useState(0.4);
-  const [color, setColor] = useState("#d71212");
+  const [color, setColor] = useState("#2563eb");
   const [showConfig, setShowConfig] = useState(false);
   const [rotate, setRotate] = useState(0);
 
@@ -42,10 +43,14 @@ function UIRulerCore({ showLines, setShowLines }: Props) {
 
     const handleClickOutside = (e: MouseEvent) => {
       const path = e.composedPath();
-      const isInsideButton = configButtonRef.current && path.includes(configButtonRef.current);
-      const isInsideOptions = configOptionsRef.current && path.includes(configOptionsRef.current);
+      const isInsideButton =
+        configButtonRef.current && path.includes(configButtonRef.current);
+      const isInsideOptions =
+        configOptionsRef.current && path.includes(configOptionsRef.current);
+      const isInsideMoveButton =
+        moveLinesButtonRef.current && path.includes(moveLinesButtonRef.current);
 
-      if (!isInsideButton && !isInsideOptions) {
+      if (!isInsideButton && !isInsideOptions && !isInsideMoveButton) {
         setShowConfig(false);
       }
     };
@@ -84,7 +89,10 @@ function UIRulerCore({ showLines, setShowLines }: Props) {
           }}
         />
         {/* Move */}
-        <MoveLinesButton targetRef={containerRef} />
+        <MoveLinesButton
+          ref={moveLinesButtonRef}
+          targetRef={containerRef}
+        />
       </div>
       {/* Config */}
       <ConfigButton

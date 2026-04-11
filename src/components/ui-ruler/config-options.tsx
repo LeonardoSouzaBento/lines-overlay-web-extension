@@ -31,7 +31,7 @@ export const ConfigOptions = forwardRef<HTMLDivElement, ConfigOptionsProps>(
                 </label>
                 <div className="flex items-center gap-2">
                   <input
-                    className="w-16 h-8 rounded-full border border-border pl-3 text-sm text-foreground bg-background/50 focus:outline-none focus:ring-1 focus:ring-ring"
+                    className="w-16 h-8 rounded-md border border-border pl-3 text-sm text-foreground bg-background/50 focus:outline-none focus:ring-1 focus:ring-ring"
                     type="number"
                     step={field.step}
                     value={binding.value}
@@ -70,21 +70,26 @@ export const ConfigOptions = forwardRef<HTMLDivElement, ConfigOptionsProps>(
           <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground pl-0.5">
             Cor
           </span>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap">
             {colorOptions.map((c) => (
-              <Button
-                className="rounded-full ring-offset-2 hover:ring-2 ring-ring transition-all"
+              <div
+                className="size-9 shrink-0 flex items-center justify-center 
+                cursor-pointer"
                 key={c.value}
-                variant="ghost"
-                size="iconXs"
-                title={c.name}
                 onClick={() => props.setColor(c.value)}
               >
-                <span
-                  className="block w-full h-full rounded-full border border-black/5"
-                  style={{ backgroundColor: c.value }}
-                />
-              </Button>
+                <Button
+                  className="rounded-full ring-offset-2 hover:ring-2 ring-ring transition-all"
+                  variant="ghost"
+                  size="iconXs"
+                  title={c.name}
+                >
+                  <span
+                    className="block w-full h-full rounded-full border border-black/5"
+                    style={{ backgroundColor: c.value }}
+                  />
+                </Button>
+              </div>
             ))}
           </div>
         </div>

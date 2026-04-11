@@ -3,14 +3,14 @@ import {
   useRef,
   type MouseEvent as ReactMouseEvent,
   type RefObject,
+  forwardRef,
 } from "react";
 import { Button, Icon } from "@/components/ui";
 
-export function MoveLinesButton({
-  targetRef,
-}: {
-  targetRef: RefObject<HTMLDivElement | null>;
-}) {
+export const MoveLinesButton = forwardRef<
+  HTMLDivElement,
+  { targetRef: RefObject<HTMLDivElement | null> }
+>(({ targetRef }, ref) => {
   const dragging = useRef(false);
   const last = useRef({ x: 0, y: 0 });
 
@@ -42,7 +42,10 @@ export function MoveLinesButton({
   }
 
   return (
-    <div className="w-full h-full absolute left-0 top-0 flex items-center justify-center pointer-events-auto">
+    <div
+      ref={ref}
+      className="w-full h-full absolute left-0 top-0 flex items-center justify-center pointer-events-auto"
+    >
       <Button
         size="iconMd"
         variant="ghost"
@@ -53,4 +56,6 @@ export function MoveLinesButton({
       </Button>
     </div>
   );
-}
+});
+
+MoveLinesButton.displayName = "MoveLinesButton";

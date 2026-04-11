@@ -6,25 +6,6 @@ import {
 } from "react";
 import { Button, Icon } from "@/components/ui";
 
-const css = {
-  wrapper: {
-    width: "100%",
-    height: "100%",
-    position: "absolute" as const,
-    left: 0,
-    top: 0,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    pointerEvents: "auto",
-  },
-  button: {
-    backgroundColor: "rgba(255,255,255,0.75)",
-    backdropFilter: "blur(2px)",
-    borderRadius: 9999,
-  },
-} as const;
-
 export function MoveLinesButton({
   targetRef,
 }: {
@@ -61,13 +42,13 @@ export function MoveLinesButton({
   }
 
   return (
-    <div style={css.wrapper}>
+    <div className="w-full h-full absolute left-0 top-0 flex items-center justify-center pointer-events-auto">
       <Button
         size="icon"
         data-black
         variant="ghost"
         onMouseDown={onMouseDown}
-        style={css.button}
+        className="bg-white/75 backdrop-blur-[2px] rounded-full"
       >
         <Icon Icon={Move} size="3xl" strokeWidth="2" />
       </Button>

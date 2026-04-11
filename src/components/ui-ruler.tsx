@@ -9,28 +9,6 @@ import {
 import type { StateSetter } from "@/types";
 import { Button, Icon } from "@/components/ui";
 
-const css = {
-  overlay: {
-    position: "absolute" as const,
-    top: "calc(50dvh - 24px)",
-    left: 0,
-    width: "100%",
-    pointerEvents: "none" as const,
-    display: "flex",
-    justifyContent: "center",
-    zIndex: 10,
-  },
-  triggerButton: {
-    position: "absolute" as const,
-    bottom: 8,
-    right: 8,
-    paddingRight: 5,
-    zIndex: 20,
-    backgroundColor: "rgba(255,255,255,0.90)",
-    boxShadow: "0 1px 3px rgba(15,23,42,0.2)",
-  },
-} as const;
-
 type Props = {
   showLines: boolean;
   setShowLines: StateSetter<boolean>;
@@ -62,9 +40,14 @@ function UIRulerCore({ showLines, setShowLines }: Props) {
 
   return (
     <>
-      <div ref={containerRef} style={{ ...css.overlay, height }}>
+      <div
+        ref={containerRef}
+        className="absolute left-0 z-10 flex w-full justify-center pointer-events-none top-[calc(50dvh-24px)]"
+        style={{ height }}
+      >
         {/* linhas */}
         <div
+          className="transition-transform duration-200"
           style={{
             width: rotate === 0 ? "100%" : "100dvh",
             height: rotate === 0 ? height : "100%",
@@ -111,31 +94,20 @@ export function UIRuler() {
   const [showLines, setShowLines] = useState(true);
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        zIndex: 9000,
-        bottom: 0,
-        left: 0,
-        width: "100%",
-        height: "100dvh",
-        fontFamily: "Inter, sans-serif",
-        color: "#000",
-      }}
-    >
+    <div className="fixed bottom-0 left-0 z-[9000] h-dvh w-full font-sans text-black">
       <UIRulerCore setShowLines={setShowLines} showLines={showLines} />
 
       <Button
         variant="ghost"
+        className="absolute right-2 bottom-2 z-20 bg-white/90 shadow-sm pr-1.25 flex items-center gap-2"
         style={{
-          ...css.triggerButton,
           visibility: showLines ? "hidden" : "visible",
         }}
         onClick={() => setShowLines((v) => !v)}
       >
         <Icon Icon={Eye} size="3xl" strokeWidth="light" />
         Ver Linhas
-        <span style={{ color: "#787878ff", fontSize: 14 }}>
+        <span className="text-[#787878ff] text-sm">
           Ctrl + <strong>;</strong>
         </span>
         <DismountButton />

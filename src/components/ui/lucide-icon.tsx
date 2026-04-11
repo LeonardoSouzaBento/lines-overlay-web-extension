@@ -29,16 +29,6 @@ const iconSizes = {
   h1: '1.4757em',
 };
 
-const css = {
-  wrapper: {
-    height: '0.75rem',
-    display: 'inline-flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'visible' as const,
-  },
-} as const;
-
 interface IconProps extends Omit<LucideProps, 'size' | 'strokeWidth'> {
   Icon: LucideIconType;
   size?: SizeValue | string;
@@ -47,7 +37,7 @@ interface IconProps extends Omit<LucideProps, 'size' | 'strokeWidth'> {
 
 export const Icon = ({ Icon, size, className, strokeWidth, fill }: IconProps) => {
   return (
-    <div data-icon style={css.wrapper}>
+    <div data-icon className="h-3 inline-flex justify-center items-center overflow-visible">
       <Icon
         size={iconSizes[size as SizeValue] || size || '1.067em'}
         strokeWidth={weights[strokeWidth as StrokeWidthValue] || strokeWidth || 2.6}

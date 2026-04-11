@@ -11,18 +11,8 @@ export const ButtonsWrapper: React.FC<ButtonsWrapperProps> = ({
   className = '',
   gap = 3,
 }) => {
-  const css = {
-    container: {
-      height: 'auto',
-      display: 'flex',
-      flexWrap: 'wrap' as const,
-      alignItems: 'center',
-      gap: `${gap * 0.25}rem`,
-    },
-  } as const;
-
   return (
-    <div style={css.container} className={className}>
+    <div className={`h-auto flex flex-wrap items-center gap-${gap} ${className}`}>
       {children}
     </div>
   );

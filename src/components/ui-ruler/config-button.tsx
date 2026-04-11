@@ -3,43 +3,6 @@ import { Button, Icon, Separator } from "@/components/ui";
 import { ChevronDown, ChevronUp, EyeOff } from "lucide-react";
 import { DismountButton } from "./dismount-button";
 
-const css = {
-  container: {
-    position: "fixed",
-    bottom: 8,
-    right: 8,
-    zIndex: 9999,
-    pointerEvents: "auto",
-    height: 40,
-    border: "1px solid rgba(148,163,184,0.5)",
-    backgroundColor: "rgb(255,255,255)",
-    color: "#000",
-    boxShadow: "0 1px 3px rgba(15,23,42,0.2)",
-    display: "flex",
-    alignItems: "center",
-    paddingLeft: 14,
-    paddingRight: 4,
-    borderRadius: 4,
-  },
-  label: {
-    fontWeight: 600,
-    letterSpacing: "0.03em",
-    paddingRight: 8,
-    fontSize: 14,
-    userSelect: "none",
-  },
-  buttonsRow: {
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    paddingRight: 2,
-    gap: 4,
-  },
-  closeIcon: {
-    color: "#dc2626",
-  },
-} as const;
-
 interface Props {
   open: boolean;
   onToggleConfig: () => void;
@@ -60,9 +23,9 @@ export function ConfigButton({ onToggleConfig, open, setShowLines }: Props) {
   };
 
   return (
-    <div style={css.container}>
+    <div className="fixed bottom-2 right-2 z-9999 pointer-events-auto h-10 border border-slate-400/50 bg-white text-black shadow-sm flex items-center pl-3.5 pr-1 rounded-sm">
       <span
-        style={css.label}
+        className="font-semibold tracking-wide pr-2 text-sm select-none"
         onClick={(e) => {
           e.stopPropagation();
           onToggleConfig();
@@ -71,14 +34,11 @@ export function ConfigButton({ onToggleConfig, open, setShowLines }: Props) {
         Configurar
       </span>
 
-      <div style={css.buttonsRow}>
+      <div className="h-full flex items-center pr-0.5 gap-1">
         {[1, 2, 3].map((item) =>
           item !== 2 ? (
             <Button
-              style={{
-                outlineWidth: 1,
-                color: "#000",
-              }}
+              className="outline-1 text-black"
               variant={"transparent"}
               size="icon-sm"
               data-black
@@ -105,7 +65,7 @@ export function ConfigButton({ onToggleConfig, open, setShowLines }: Props) {
               )}
             </Button>
           ) : (
-            <Separator orientation="vertical" style={{ height: "66%" }} />
+            <Separator orientation="vertical" className="h-[66%]" key={item} />
           ),
         )}
         <DismountButton />

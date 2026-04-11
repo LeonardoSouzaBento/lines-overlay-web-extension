@@ -13,12 +13,7 @@ export function DismountButton() {
       size="icon-sm"
       variant="transparent"
       onClick={handleDismount}
-      style={{
-        color: "white",
-        backgroundColor: "red",
-        marginLeft: 6,
-        borderRadius: 3,
-      }}
+      className="text-white bg-red-600 ml-1.5 rounded-sm"
     >
       <div>
         <Icon Icon={X} size="3xl" color="red" strokeWidth="light" />

@@ -3,70 +3,6 @@ import * as React from "react";
 type ButtonVariant = "default" | "ghost" | "transparent";
 type ButtonSize = "default" | "sm" | "icon" | "icon-sm";
 
-const styles = {
-  base: {
-    width: "auto",
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 8,
-    borderRadius: 4,
-    border: "none",
-    position: "relative",
-    outline: "none !important",
-    fontWeight: 600,
-    fontSize: 14,
-  } satisfies React.CSSProperties,
-
-  variants: {
-    default: {
-      backgroundColor: "#0ea5e9",
-      color: "#ffffff",
-    },
-    ghost: {
-      backgroundColor: "transparent",
-      color: "#111827",
-      border: "1px solid #d6d6d6ff",
-    },
-    transparent: {
-      backgroundColor: "transparent",
-    },
-  } satisfies Record<ButtonVariant, React.CSSProperties>,
-
-  sizes: {
-    default: {
-      height: 40,
-      paddingInline: 12,
-      paddingBlock: (12 * 0.73438) / 0.93,
-    },
-    sm: {
-      height: 36,
-      paddingInline: 12,
-      paddingBlock: 10,
-    },
-    icon: {
-      width: 36,
-      height: 36,
-      padding: 0,
-    },
-    "icon-sm": {
-      width: 28,
-      height: 28,
-      padding: 0,
-    },
-  } satisfies Record<ButtonSize, React.CSSProperties>,
-
-  selected: {
-    border: "2px solid #60a5faef",
-    color: "hsl(198, 90%, 33%)",
-    backgroundColor: "rgba(59,130,246,0.08)",
-  } satisfies React.CSSProperties,
-
-  closeButton: {
-    color: "#0f172a",
-  } satisfies React.CSSProperties,
-};
-
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean;
@@ -77,32 +13,48 @@ export interface ButtonProps
   size?: ButtonSize;
 }
 
-type ResolveButtonStyleParams = {
-  variant: ButtonVariant;
-  size: ButtonSize;
-  selected?: boolean;
-  disabled?: boolean;
-  closeButton?: boolean;
-  style?: React.CSSProperties;
+const baseClasses =
+  "w-auto inline-flex items-center justify-center gap-2 rounded-sm border-none relative outline-none font-semibold text-sm transition-colors";
+
+const variants: Record<ButtonVariant, string> = {
+  default: "bg-primary text-primary-foreground",
+  ghost: "bg-transparent text-slate-900 border border-slate-300",
+  transparent: "bg-transparent",
 };
 
-export function resolveButtonStyles({
-  variant,
-  size,
+const sizes: Record<ButtonSize, string> = {
+  default: "h-10 px-3 py-2.5",
+  sm: "h-9 px-3 py-2.5",
+  icon: "w-9 h-9 p-0",
+  "icon-sm": "w-7 h-7 p-0",
+};
+
+export function getButtonClasses({
+  variant = "default",
+  size = "default",
   selected = false,
   disabled = false,
   closeButton = false,
-  style,
-}: ResolveButtonStyleParams): React.CSSProperties {
-  return {
-    ...styles.base,
-    ...styles.variants[variant],
-    ...styles.sizes[size],
-    ...(disabled && { opacity: 0.6, cursor: "not-allowed" }),
-    ...(selected && styles.selected),
-    ...(closeButton && styles.closeButton),
-    ...style,
-  };
+  className = "",
+}: {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  selected?: boolean;
+  disabled?: boolean;
+  closeButton?: boolean;
+  className?: string;
+}): string {
+  return [
+    baseClasses,
+    variants[variant],
+    sizes[size],
+    disabled && "opacity-60 cursor-not-allowed",
+    selected && "border-2 border-[#60a5faef] text-[#1a6b8f] bg-[#3b82f6]/10",
+    closeButton && "text-slate-900",
+    className,
+  ]
+    .filter(Boolean)
+    .join(" ");
 }
 
 type SlotProps = React.HTMLAttributes<HTMLElement> & {
@@ -147,20 +99,21 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const Comp = asChild ? Slot : "button";
+    const classes = getButtonClasses({
+      variant,
+      size,
+      selected,
+      disabled,
+      closeButton,
+      className,
+    });
 
     return (
       <Comp
         ref={ref}
-        className={className}
+        className={classes}
         disabled={disabled}
-        style={resolveButtonStyles({
-          variant,
-          size,
-          selected,
-          disabled,
-          closeButton,
-          style,
-        })}
+        style={style}
         {...props}
       />
     );

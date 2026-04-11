@@ -1,20 +1,5 @@
 import * as React from 'react';
 
-const css = {
-  base: {
-    flexShrink: 0,
-    backgroundColor: 'hsl(220, 13%, 85%)',
-  },
-  horizontal: {
-    height: 1,
-    width: '100%',
-  },
-  vertical: {
-    height: '100%',
-    width: 1,
-  },
-} as const;
-
 type SeparatorProps = React.HTMLAttributes<HTMLDivElement> & {
   orientation?: 'horizontal' | 'vertical';
   decorative?: boolean;
@@ -22,7 +7,7 @@ type SeparatorProps = React.HTMLAttributes<HTMLDivElement> & {
 
 const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>(
   ({ className, orientation = 'horizontal', decorative = true, style, ...props }, ref) => {
-    const dimensionStyle = orientation === 'horizontal' ? css.horizontal : css.vertical;
+    const orientationClasses = orientation === 'horizontal' ? 'h-px w-full' : 'h-full w-px';
 
     const ariaProps = decorative
       ? { role: 'none' as const }
@@ -34,8 +19,8 @@ const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>(
     return (
       <div
         ref={ref}
-        style={{ ...css.base, ...dimensionStyle, ...style }}
-        className={className}
+        className={`shrink-0 bg-border ${orientationClasses} ${className}`}
+        style={style}
         {...ariaProps}
         {...props}
       />

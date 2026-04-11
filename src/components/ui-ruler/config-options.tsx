@@ -2,90 +2,6 @@ import { RotateCw } from "lucide-react";
 import { Button, Icon } from "@/components/ui";
 import { type ConfigOptionsProps, NUMBER_FIELDS, colorOptions } from "@/data/data";
 
-const css = {
-  container: {
-    position: "fixed",
-    bottom: 52,
-    right: 8,
-    zIndex: 1000,
-    pointerEvents: "auto",
-    backgroundColor: "rgba(255,255,255,0.94)",
-    backdropFilter: "blur(4px)",
-    boxShadow: "0 4px 6px rgba(15,23,42,0.12)",
-    border: "1px solid rgba(148,163,184,0.3)",
-    borderRadius: 6,
-    paddingInline: 12,
-    paddingBlock: 10,
-    width: "auto",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-end",
-    gap: 4,
-  },
-  fieldRow: {
-    width: "100%",
-    marginBottom: 12,
-    display: "flex",
-    flexDirection: "column",
-    gap: 8,
-  },
-  wrapper: {
-    display: "flex",
-    alignItems: "flex-end",
-    gap: 8,
-    borderRadius: 4,
-  },
-  inputWrapper: {
-    width: 104,
-  },
-  label: {
-    display: "block",
-    fontWeight: 500,
-    marginBottom: 5,
-    fontSize: 14,
-  },
-  numberInput: {
-    width: "100%",
-    height: 32,
-    borderRadius: 4,
-    border: "1px solid #e5e7eb",
-    paddingInline: 8,
-    boxSizing: "border-box",
-    fontSize: 14,
-    color: "#000",
-    backgroundColor: "rgba(255,255,255,0.50)",
-  },
-  quickRow: {
-    display: "flex",
-    gap: 6,
-    marginTop: 4,
-  },
-  quickButton: {
-    fontWeight: 500,
-    borderRadius: 999,
-    backgroundColor: "rgba(255,255,255,0.50)",
-  },
-  colorSection: {
-    marginBottom: 12,
-  },
-  colorLabel: {
-    display: "block",
-    fontWeight: 500,
-    marginBottom: 4,
-    fontSize: 14,
-  },
-  colorRow: {
-    display: "flex",
-    gap: 8,
-  },
-  colorDot: {
-    display: "block",
-    width: "80%",
-    height: "80%",
-    borderRadius: 999,
-  },
-} as const;
-
 export function ConfigOptions(props: ConfigOptionsProps) {
   const fieldBindings = {
     lines: { value: props.lines, set: props.setLines },
@@ -94,24 +10,24 @@ export function ConfigOptions(props: ConfigOptionsProps) {
   };
 
   return (
-    <div style={css.container}>
+    <div className="fixed bottom-13 right-2 z-1000 pointer-events-auto bg-white/94 backdrop-blur-sm shadow-md border border-slate-400/30 rounded-md px-3 py-2.5 w-auto flex flex-col items-end gap-1">
       {NUMBER_FIELDS.map((field) => {
         const binding = fieldBindings[field.key];
 
         return (
-          <div style={css.fieldRow} key={field.key}>
-            <div style={css.wrapper}>
-              <div style={css.inputWrapper}>
-                <label style={css.label}>{field.label}</label>
+          <div className="w-full mb-3 flex flex-col gap-2" key={field.key}>
+            <div className="flex items-end gap-2 rounded-sm">
+              <div className="w-26">
+                <label className="block font-medium mb-1.25 text-sm">{field.label}</label>
                 <input
-                  style={css.numberInput}
+                  className="w-full h-8 rounded-sm border border-gray-200 px-2 box-border text-sm text-black bg-white/50"
                   type="number"
                   step={field.step}
                   value={binding.value}
                   onChange={(e) => binding.set(+e.target.value)}
                 />
               </div>
-              <div style={css.quickRow}>
+              <div className="flex gap-1.5 mt-1">
                 {field.quick.map((v) => {
                   return (
                     <Button
@@ -120,7 +36,7 @@ export function ConfigOptions(props: ConfigOptionsProps) {
                       data-option
                       variant="ghost"
                       size="icon-sm"
-                      style={css.quickButton}
+                      className="font-medium rounded-full bg-white/50"
                       onClick={() => binding.set(v)}
                     >
                       {v}
@@ -133,19 +49,19 @@ export function ConfigOptions(props: ConfigOptionsProps) {
         );
       })}
 
-      <div style={css.colorSection}>
-        <span style={css.colorLabel}>Cor</span>
-        <div style={css.colorRow}>
+      <div className="mb-3">
+        <span className="block font-medium mb-1 text-sm">Cor</span>
+        <div className="flex gap-2">
           {colorOptions.map((c) => (
             <Button
-              style={{ borderRadius: 999 }}
+              className="rounded-full"
               key={c.value}
               variant="ghost"
               size="icon-sm"
               title={c.name}
               onClick={() => props.setColor(c.value)}
             >
-              <span style={{ ...css.colorDot, backgroundColor: c.value }} />
+              <span className="block w-[80%] h-[80%] rounded-full" style={{ backgroundColor: c.value }} />
             </Button>
           ))}
         </div>
@@ -154,7 +70,7 @@ export function ConfigOptions(props: ConfigOptionsProps) {
       <Button
         variant="ghost"
         size="sm"
-        style={{ width: "100%" }}
+        className="w-full"
         onClick={() => {
           if (props.rotate === 0) {
             props.setRotate(90);
